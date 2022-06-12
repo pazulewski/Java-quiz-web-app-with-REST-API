@@ -18,7 +18,7 @@ public class QuestionsDto {
     @NoArgsConstructor
     @Getter
     @ToString
-    private static class QuestionDto {
+    public static class QuestionDto {
         private String category;
         private String type;
         private String difficulty;

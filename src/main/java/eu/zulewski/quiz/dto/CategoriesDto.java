@@ -18,7 +18,7 @@ public class CategoriesDto {
     @NoArgsConstructor
     @Getter
     @ToString
-    private static class CategoryDto {
+    public static class CategoryDto {
         private int id;
         private String name;
     }
