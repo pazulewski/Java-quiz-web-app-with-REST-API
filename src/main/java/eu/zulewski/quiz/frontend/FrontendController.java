@@ -1,5 +1,6 @@
 package eu.zulewski.quiz.frontend;
 
+import eu.zulewski.quiz.services.OngoingGameService;
 import eu.zulewski.quiz.services.QuizDataService;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class FrontendController {
 
     private QuizDataService quizDataService;
+    private OngoingGameService ongoingGameService;
 
-    public FrontendController(QuizDataService quizDataService) {
+    public FrontendController(QuizDataService quizDataService, OngoingGameService ongoingGameService) {
         this.quizDataService = quizDataService;
+        this.ongoingGameService = ongoingGameService;
     }
 
     @GetMapping("/")
@@ -32,8 +35,19 @@ public class FrontendController {
     }
 
     @PostMapping("/select")
-    public String select(Model model, @ModelAttribute GameOptions gameOptions) {
+    public String postSelectForm(Model model, @ModelAttribute GameOptions gameOptions) {
         log.info("Form submitted with data: " + gameOptions);
-        return "index";
+        ongoingGameService.init(gameOptions);
+        return "redirect:game";
+    }
+
+    @GetMapping("/game")
+    public String game(Model model) {
+        model.addAttribute("userAnswer", new UserAnswer());
+        model.addAttribute("currentQuestionNumber", ongoingGameService.getCurrentQuestionNumber());
+        model.addAttribute("totalQuestionNumber", ongoingGameService.getTotalQuestionNumber());
+        model.addAttribute("currentQuestion", ongoingGameService.getCurrentQuestion());
+        model.addAttribute("currentQuestionAnswers", ongoingGameService.getCurrentQuestionAnswersInRandomOrder());
+        return "game";
     }
 }

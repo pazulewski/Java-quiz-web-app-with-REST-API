@@ -2,7 +2,10 @@ package eu.zulewski.quiz.services;
 
 import eu.zulewski.quiz.dto.QuestionsDto;
 import eu.zulewski.quiz.frontend.GameOptions;
+import eu.zulewski.quiz.services.QuizDataService;
+import lombok.Getter;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,22 +17,20 @@ import java.util.List;
 public class OngoingGameService {
     private GameOptions gameOptions;
     private int currentQuestionIndex;
+    @Getter
     private int points;
 
     private List<QuestionsDto.QuestionDto> questions;
 
+    @Autowired
     private QuizDataService quizDataService;
-
-    public OngoingGameService(QuizDataService quizDataService) {
-        this.quizDataService = quizDataService;
-    }
 
     public void init(GameOptions gameOptions) {
         this.gameOptions = gameOptions;
         this.currentQuestionIndex = 0;
         this.points = 0;
 
-        quizDataService.getQuizQuestions(gameOptions);
+        this.questions = quizDataService.getQuizQuestions(gameOptions);
     }
 
     public int getCurrentQuestionNumber() {
@@ -41,24 +42,24 @@ public class OngoingGameService {
     }
 
     public String getCurrentQuestion() {
-        QuestionsDto.QuestionDto question = questions.get(currentQuestionIndex);
-        return question.getQuestion();
+        QuestionsDto.QuestionDto dto = questions.get(currentQuestionIndex);
+        return dto.getQuestion();
     }
 
     public List<String> getCurrentQuestionAnswersInRandomOrder() {
-        QuestionsDto.QuestionDto question = questions.get(currentQuestionIndex);
+        QuestionsDto.QuestionDto dto = questions.get(currentQuestionIndex);
 
         List<String> answers = new ArrayList<>();
-        answers.add(question.getCorrectAnswer());
-        answers.addAll(question.getIncorrectAnswers());
+        answers.add(dto.getCorrectAnswer());
+        answers.addAll(dto.getIncorrectAnswers());
 
         Collections.shuffle(answers);
         return answers;
     }
 
     public boolean checkAnswerForCurrentQuestionAndUpdatePoints(String userAnswer) {
-        QuestionsDto.QuestionDto question = questions.get(currentQuestionIndex);
-        boolean correct = question.getCorrectAnswer().equals(userAnswer);
+        QuestionsDto.QuestionDto dto = questions.get(currentQuestionIndex);
+        boolean correct = dto.getCorrectAnswer().equals(userAnswer);
         if (correct) {
             points++;
         }
@@ -67,7 +68,6 @@ public class OngoingGameService {
 
     public boolean proceedToNextQuestion() {
         currentQuestionIndex++;
-        return currentQuestionIndex <questions.size();
+        return currentQuestionIndex < questions.size();
     }
-
 }
