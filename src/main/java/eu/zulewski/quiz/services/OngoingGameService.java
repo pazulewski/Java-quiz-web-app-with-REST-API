@@ -3,11 +3,11 @@ package eu.zulewski.quiz.services;
 import eu.zulewski.quiz.dto.QuestionsDto;
 import eu.zulewski.quiz.frontend.Difficulty;
 import eu.zulewski.quiz.frontend.GameOptions;
-import eu.zulewski.quiz.services.QuizDataService;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@SessionScope
 @Log
 public class OngoingGameService {
     private GameOptions gameOptions;
