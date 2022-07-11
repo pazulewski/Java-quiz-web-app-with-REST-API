@@ -26,7 +26,6 @@ The application shows the ability to download questions from an external API, ma
 
 
 ## Features
-List the ready features here:
 - Downloading questions from an external API.
 - Mapping questions to Java objects.
 - Possibility of choosing the number of questions and the level of difficulty.
