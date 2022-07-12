@@ -5,6 +5,7 @@
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
+* [Screenshots](#screenshots)
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
 * [Contact](#contact)
@@ -30,6 +31,12 @@ The application shows the ability to download questions from an external API, ma
 - Mapping questions to Java objects.
 - Possibility of choosing the number of questions and the level of difficulty.
 - Application web interface.
+
+
+## Screenshots
+![](/src/main/resources/images/quiz.jpg)
+![](/src/main/resources/images/quiz2.jpg)
+![](/src/main/resources/images/quiz3.jpg)
 
 
 ## Project Status
